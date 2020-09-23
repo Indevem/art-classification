@@ -94,9 +94,9 @@ def initialize_model(model_name, num_classes, feature_extract, use_pretrained=Tr
         model_ft.classifier[6] = nn.Linear(num_ftrs,num_classes)
 
     elif model_name == "vgg":
-        """ VGG11
+        """ VGG11_bn
         """
-        model_ft = models.vgg11(pretrained=use_pretrained)
+        model_ft = models.vgg11_bn(pretrained=use_pretrained)
         set_parameter_requires_grad(model_ft, feature_extract)
         num_ftrs = model_ft.classifier[6].in_features
         model_ft.classifier[6] = nn.Linear(num_ftrs,num_classes)
