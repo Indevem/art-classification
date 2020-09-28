@@ -72,7 +72,6 @@ def set_parameter_requires_grad(model, feature_extracting):
 
 def initialize_model(model_name, num_classes, feature_extract, use_pretrained=True):
     model_ft = None
-    input_size = 0
 
     if model_name == "simplenet":
         model_ft = SimpleNet()
@@ -126,7 +125,7 @@ transforms = tt.Compose([
 def make_prediction(img, device):
 	img = transforms(img.convert("RGB"))
     predictions = dict()
-    for model_name in pretrained_models.keys():
-        output = nn.Softmax(dim=1)(models[key](transforms(img.convert("RGB")).view(1, 3, 224, 224).to(DEVICE)).cpu())
-        predictions[model_name] = output.tolist()
+    for key in pretrained_models.keys():
+        output = nn.Softmax(dim=1)(pretrained_models[key](transforms(img.convert("RGB")).view(1, 3, 224, 224).to(DEVICE)).cpu())
+        predictions[key] = output.tolist()
     return img, predictions
