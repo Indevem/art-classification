@@ -75,7 +75,7 @@ def initialize_model(model_name, num_classes, feature_extract, use_pretrained=Tr
     input_size = 0
 
     if model_name == "simplenet":
-        model_ft = simplenet = SimpleNet()
+        model_ft = SimpleNet()
 
     elif model_name == "resnet":
         """ Resnet18
