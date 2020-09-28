@@ -126,6 +126,6 @@ def make_prediction(img, device):
 	img = transforms(img.convert("RGB"))
     predictions = dict()
     for key in pretrained_models.keys():
-        output = nn.Softmax(dim=1)(pretrained_models[key](transforms(img.convert("RGB")).view(1, 3, 224, 224).to(DEVICE)).cpu())
+        output = nn.Softmax(dim=1)(pretrained_models[key](img.view(1, 3, 224, 224).to(DEVICE)).cpu())
         predictions[key] = output.tolist()
     return img, predictions
