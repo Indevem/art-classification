@@ -110,12 +110,12 @@ def initialize_model(model_name, num_classes, feature_extract, use_pretrained=Tr
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model_names = ['simplenet', 'resnet', 'alexnet', 'vgg']
-models = dict()
+pretrained_models = dict()
 for name in model_names:
-    models[name] = initialize_model(model_name, 4, True, use_pretrained=True)
-    models[name].load_state_dict(torch.load(name + '.pth'))
-    models[name] = models[name].to(device)
-    models[name].eval()
+    pretrained_models[name] = initialize_model(name, 4, True, use_pretrained=True)
+    pretrained_models[name].load_state_dict(torch.load(name + '.pth'))
+    pretrained_models[name] = pretrained_models[name].to(device)
+    pretrained_models[name].eval()
 
 transforms = tt.Compose([
     tt.Resize((224, 224)),
@@ -126,7 +126,7 @@ transforms = tt.Compose([
 def make_prediction(img, device):
 	img = transforms(img.convert("RGB"))
     predictions = dict()
-    for model_name in models.keys():
+    for model_name in pretrained_models.keys():
         output = nn.Softmax(dim=1)(models[key](transforms(img.convert("RGB")).view(1, 3, 224, 224).to(DEVICE)).cpu())
         predictions[model_name] = output.tolist()
     return img, predictions
