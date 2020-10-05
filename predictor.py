@@ -53,7 +53,7 @@ class SimpleNet(nn.Module):
             nn.BatchNorm1d(1000, eps=1e-05, momentum=0.1, affine=True),
             nn.Dropout(0.4),
             nn.Linear(1000, 4, bias=True),
-            nn.Softmax(dim=0)
+            nn.Softmax(dim=1)
         )
 
     def forward(self, x):
